@@ -1,3 +1,4 @@
+import { MatriculaSerivce } from './matricula.service';
 import { Component, OnInit } from '@angular/core';
 
 declare let $ :any;
@@ -9,10 +10,19 @@ declare let $ :any;
 })
 export class MatriculaComponent implements OnInit {
 
-  constructor() { 
+  private disciplinas: any[];
+
+  constructor(private matriculaservice: MatriculaSerivce) { 
     //console.log($);
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.matriculaservice.getDatda().subscribe( data => {
+      this.disciplinas = data['records'];
+      console.log(this.disciplinas);
+    });
+
+    //this.matriculaservice.matricularAlunoDisciplina();
+   }
 
 }

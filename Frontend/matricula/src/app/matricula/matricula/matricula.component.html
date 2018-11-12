@@ -1,3 +1,6 @@
-<p>
-  matricula works!
-</p>
+<ul>
+  <li *ngFor="let disciplina of disciplinas">
+    {{disciplina.fields.COD_CRED}} | {{disciplina.fields.NOME}} | {{disciplina.fields.SEMESTRE}}
+
+ </li>
+</ul>
