@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatriculaModule } from './matricula/matricula.module';
+import { HistoricoModule } from './historico/historico.module';
+
 
 @NgModule({
   declarations: [
@@ -12,7 +14,8 @@ import { MatriculaModule } from './matricula/matricula.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatriculaModule
+    MatriculaModule,
+    HistoricoModule
   ],
   providers: [],
   bootstrap: [AppComponent]
