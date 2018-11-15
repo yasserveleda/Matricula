@@ -17,10 +17,10 @@ export class MatriculaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.matriculaservice.getDatda().subscribe( data => {
-      this.disciplinas = data['records'];
-      console.log(this.disciplinas);
-    });
+    // this.matriculaservice.getDatda().subscribe( data => {
+    //   this.disciplinas = data['records'];
+    //   console.log(this.disciplinas);
+    // });
 
     //this.matriculaservice.matricularAlunoDisciplina();
    }

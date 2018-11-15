@@ -1,6 +1,23 @@
-<ul>
-  <li *ngFor="let historico of historicos">
-    {{historico.fields.MATRICULA}} | {{historico.fields.CODCRED}} | {{historico.fields.STATUS}} | {{historico.fields.TURMA}}
-
- </li>
-</ul>
+<div class="container">
+  <div class="col-md-12">
+    <h5> Histórico da matrícula: {{ aluno.ALUNO }}</h5>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">CODCRED</th>
+        <th scope="col">Disciplina</th>
+        <th scope="col">Turma</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let historico of historicos">
+        <th scope="row">{{historico.fields.CODCRED}}</th>
+        <td> {{ historico.fields.nome_disciplina }} </td>
+        <td>{{historico.fields.TURMA}}</td>
+        <td>{{historico.fields.STATUS}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
