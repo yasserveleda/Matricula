@@ -40,13 +40,12 @@ export class HistoricoComponent implements OnInit {
     
   }
 
-  getDisciplina(COD_CRED) {
+  getDisciplina(CODCRED) {
     let lista = this.disciplinas;
-
-    if(lista && COD_CRED) {
-      let found = lista.find( element => element.fields.COD_CRED == COD_CRED);
+    if(lista && CODCRED) {
+      let found = lista.find( element => element.fields.CODCRED == CODCRED);
       if(found){
-        return found.fields.NOME;
+        return found.fields.DISCIPLINA;
       } else {
         return 'Disciplina Não encontrada';
       }

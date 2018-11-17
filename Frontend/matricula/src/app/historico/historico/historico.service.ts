@@ -27,7 +27,7 @@ export class HistoricoService {
   }
 
   getDisciplinas() {
-    let url = "https://api.airtable.com/v0/appM4HMJqyZHY4gBR/DISCIPLINA";
+    let url = "https://api.airtable.com/v0/appM4HMJqyZHY4gBR/DISCIPLINA2";
     return this.http.get<myData>(url, this.httpOptions);
   }
 
