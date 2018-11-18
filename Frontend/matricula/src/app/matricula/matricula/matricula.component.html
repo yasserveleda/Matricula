@@ -1,6 +1,68 @@
-<ul>
-  <li *ngFor="let disciplina of disciplinas">
-    {{disciplina.fields.COD_CRED}} | {{disciplina.fields.NOME}} | {{disciplina.fields.SEMESTRE}}
+<div id="matricula">
+    <div class="container">
+      <div class="col-md-12">
+          <div class="form-inline">
+            <label class="mr-sm-2" for="matricula-input">Digite a Matricula do Aluno: </label>
+            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+              <input (input)="matricula = $event.target.value" type="text" class="form-control" id="matricula-input" placeholder="000000">
+            </div>
+          
+            <button [disabled]="!matricula" (click)="getAluno();" class="btn btn-primary">Buscar</button>
+          </div>
+      </div>
+      <div class="col-md-12" [hidden]="exibirErro">
+        <h5> Histórico da matrícula: {{ aluno.ALUNO }}</h5>
+      </div>
+      <div class="col-md-12 text-center" [hidden]="!exibirErro">
+        <h5> Aluno não encontrado </h5>
+      </div>
+      <!-- <ul>
+          <li *ngFor="let disciplina of disciplinas">
+            {{disciplina.fields.CODCRED}} | {{disciplina.fields.DISCIPLINA}} | {{disciplina.fields.SEMESTRE}}
+         </li>
+        </ul> -->
 
- </li>
-</ul>
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table" [hidden]="exibirErro">
+            <thead>
+              <tr>
+                <th scope="col">CODCRED</th>
+                <th scope="col">Semestre</th>
+                <th scope="col">Disciplina</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let disciplina of disciplinasOferecidas">
+                <th scope="row">{{ disciplina.fields.CODCRED }}</th>
+                <td>{{ disciplina.fields.SEMESTRE}}</td>
+                <td> {{ disciplina.fields.DISCIPLINA }} </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
+        <div class="col-md-6">
+          <table class="table" [hidden]="exibirErro">
+            <thead>
+              <tr>
+                <th scope="col">CODCRED</th>
+                <th scope="col">Disciplina</th>
+                <th scope="col">Turma</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let historico of historicoAluno">
+                <th scope="row">{{ historico.fields.CODCRED}}</th>
+                <td> {{ historico.fields.nome_disciplina }} </td>
+                <td>{{ historico.fields.TURMA}}</td>
+                <td>{{ historico.fields.STATUS}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+    </div>
+</div>

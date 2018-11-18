@@ -21,8 +21,8 @@ export class HistoricoService {
     };
  }
 
-  getData() {
-    let url = "https://api.airtable.com/v0/appM4HMJqyZHY4gBR/HISTORICO?filterByFormula=({MATRICULA}='101101')";
+  getHistorico(matricula) {
+    let url = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/HISTORICO?filterByFormula=({MATRICULA}='${matricula}')`;
     return this.http.get<myData>(url, this.httpOptions);
   }
 
@@ -31,8 +31,8 @@ export class HistoricoService {
     return this.http.get<myData>(url, this.httpOptions);
   }
 
-  getAluno() {
-    let url = "https://api.airtable.com/v0/appM4HMJqyZHY4gBR/ALUNO?filterByFormula=({ALUNO}='101101')";
+  getAluno(matricula) {
+    let url = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/ALUNO?filterByFormula=({ALUNO}='${matricula}')`;
     return this.http.get<myData>(url, this.httpOptions);
   }
 }

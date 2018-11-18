@@ -8,41 +8,30 @@ interface myData {
 @Injectable()
 export class MatriculaSerivce {
 
+    private httpOptions;
+
     constructor(private http: HttpClient) {
-        this.matricularAlunoDisciplina();
-     }
-
-    getDatda() {
-        return this.http.get<myData>('https://api.airtable.com/v0/appM4HMJqyZHY4gBR/DISCIPLINA?api_key=key7EJ7UZ3gFw0FLc');
-    }
-
-    matricularAlunoDisciplina() {
-        const httpOptions = {
+        this.httpOptions = {
             headers: new HttpHeaders({
                 'Authorization': 'Bearer key7EJ7UZ3gFw0FLc',
                 'Content-Type': 'application/json'
             })
         };
+    }
 
-        const data = {
-            "id": "recUQfECdkWXFE8zy",
-            "fields": {
-                "ID": "1",
-                "ALUNO": "101101",
-                "SENHA": "101101@psa.br",
-                "DISCIPLINAS_MATRICULADO": [
-                    "recnfsgdoOeuFC4RA",
-                    "recakbctFXdaIYu6B",
-                    "recXcUbsSubyoqweA"
-                ],
-                "COD_CRED": [
-                    "4637N-02",
-                    "4637C-04",
-                    "4636C-04"
-                ]
-            }
-        }
+    getDisciplinas() {
+        let urlAsc = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/DISCIPLINA2?sort%5B0%5D%5Bfield%5D=SEMESTRE&sort%5B0%5D%5Bdirection%5D=asc`;
+        //let url = "https://api.airtable.com/v0/appM4HMJqyZHY4gBR/DISCIPLINA2?sort=([{field: 'ID', direction: 'asc'}])";
+        return this.http.get<myData>(urlAsc, this.httpOptions);
+    }
 
-        return this.http.post('https://api.airtable.com/v0/appM4HMJqyZHY4gBR/ALUNO/recUQfECdkWXFE8zy', data, httpOptions);
+    getHistorico(matricula) {
+        let url = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/HISTORICO?filterByFormula=({MATRICULA}='${matricula}')`;
+        return this.http.get<myData>(url, this.httpOptions);
+    }
+
+    getAluno(matricula) {
+        let url = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/ALUNO?filterByFormula=({ALUNO}='${matricula}')`;
+        return this.http.get<myData>(url, this.httpOptions);
     }
 }

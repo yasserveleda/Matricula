@@ -1,23 +1,38 @@
-<div class="container">
-  <div class="col-md-12">
-    <h5> Histórico da matrícula: {{ aluno.ALUNO }}</h5>
-  </div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">CODCRED</th>
-        <th scope="col">Disciplina</th>
-        <th scope="col">Turma</th>
-        <th scope="col">Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let historico of historicos">
-        <th scope="row">{{historico.fields.CODCRED}}</th>
-        <td> {{ historico.fields.nome_disciplina }} </td>
-        <td>{{historico.fields.TURMA}}</td>
-        <td>{{historico.fields.STATUS}}</td>
-      </tr>
-    </tbody>
-  </table>
+<div id="historico">
+    <div class="container">
+      <div class="col-md-12">
+          <div class="form-inline">
+            <label class="mr-sm-2" for="matricula-input">Digite a Matricula do Aluno: </label>
+            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+              <input (input)="matricula = $event.target.value" type="text" class="form-control" id="matricula-input" placeholder="000000">
+            </div>
+          
+            <button [disabled]="!matricula" (click)="getHistorico();" class="btn btn-primary">Buscar</button>
+          </div>
+      </div>
+      <div class="col-md-12" [hidden]="exibirErro">
+        <h5> Histórico da matrícula: {{ aluno.ALUNO }}</h5>
+      </div>
+      <div class="col-md-12 text-center" [hidden]="!exibirErro">
+        <h5> Aluno não encontrado </h5>
+      </div>
+      <table class="table" [hidden]="exibirErro">
+        <thead>
+          <tr>
+            <th scope="col">CODCRED</th>
+            <th scope="col">Disciplina</th>
+            <th scope="col">Turma</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let historico of historicos">
+            <th scope="row">{{historico.fields.CODCRED}}</th>
+            <td> {{ historico.fields.nome_disciplina }} </td>
+            <td>{{historico.fields.TURMA}}</td>
+            <td>{{historico.fields.STATUS}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 </div>
