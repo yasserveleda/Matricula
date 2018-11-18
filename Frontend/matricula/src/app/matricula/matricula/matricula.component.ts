@@ -20,7 +20,6 @@ export class MatriculaComponent implements OnInit {
 
   constructor(private matriculaservice: MatriculaSerivce) { 
     this.aluno = {};
-    this.aluno.ALUNO = 'YASSER';
     this.exibirErro = false;
   }
 
@@ -31,10 +30,25 @@ export class MatriculaComponent implements OnInit {
     });
   }
   
+  matriculaAluno() {
+    if(this.aluno.id) {
+      console.log(this.aluno);
+      this.matriculaservice.matriculaAluno(this.aluno).subscribe( data => {
+        console.log(data);
+      });
+    }
+  }
 
   //Faz a busca do Aluno atraves da matricula
   getAlunoHistorico() {
     let matricula = this.matricula;
+
+    this.matriculaservice.getAluno(matricula).subscribe( data => {
+      if(data[`records`].length > 0){
+        this.aluno = data[`records`][0];
+      }
+    });
+
     this.matriculaservice.getHistorico(matricula).subscribe( data => {
       if(data[`records`].length > 0){
         this.exibirErro = false;

@@ -34,4 +34,18 @@ export class MatriculaSerivce {
         let url = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/ALUNO?filterByFormula=({ALUNO}='${matricula}')`;
         return this.http.get<myData>(url, this.httpOptions);
     }
+
+    matriculaAluno(aluno) {
+        let url = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/ALUNO/${aluno.id}`;
+        let alunoAux = {
+            "fields": {
+                "DISCIPLINAS_MATRICULADO": [
+                    "recMTURu8324JhoOf",
+                    "recR59tkJJrQ74BwO"
+                ]
+            }
+        };
+
+        return this.http.patch<myData>(url, alunoAux, this.httpOptions);
+    }
 }
