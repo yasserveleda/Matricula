@@ -32,7 +32,6 @@ export class MatriculaComponent implements OnInit {
   
   matriculaAluno() {
     if(this.aluno.id) {
-      console.log(this.aluno);
       this.matriculaservice.matriculaAluno(this.aluno).subscribe( data => {
         console.log(data);
       });
@@ -73,6 +72,18 @@ export class MatriculaComponent implements OnInit {
       }
     }
     this.disciplinasOferecidas = todasDisciplinas;
+  }
+
+  
+  matriculaDisciplinaAluno(disciplina) {
+    if(this.aluno.fields.DISCIPLINAS_MATRICULADO) {
+      this.aluno.fields.DISCIPLINAS_MATRICULADO.push(disciplina.id);
+      this.matriculaAluno();
+    } else {
+      this.aluno.fields.DISCIPLINAS_MATRICULADO = [];
+      this.aluno.fields.DISCIPLINAS_MATRICULADO.push(disciplina.id);
+      this.matriculaAluno();
+    }
   }
 
 }

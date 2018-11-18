@@ -37,12 +37,10 @@ export class MatriculaSerivce {
 
     matriculaAluno(aluno) {
         let url = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/ALUNO/${aluno.id}`;
+        let disciplinas = aluno.fields.DISCIPLINAS_MATRICULADO;
         let alunoAux = {
             "fields": {
-                "DISCIPLINAS_MATRICULADO": [
-                    "recMTURu8324JhoOf",
-                    "recR59tkJJrQ74BwO"
-                ]
+                "DISCIPLINAS_MATRICULADO": disciplinas
             }
         };
 

@@ -28,6 +28,7 @@
                 <th scope="col">CODCRED</th>
                 <th scope="col">Semestre</th>
                 <th scope="col">Disciplina</th>
+                <th scope="col"> Matricular </th>
               </tr>
             </thead>
             <tbody>
@@ -35,6 +36,7 @@
                 <th scope="row">{{ disciplina.fields.CODCRED }}</th>
                 <td>{{ disciplina.fields.SEMESTRE}}</td>
                 <td> {{ disciplina.fields.DISCIPLINA }} </td>
+                <td> <button (click)="matriculaDisciplinaAluno(disciplina)" class="btn btn-sm btn-primary"> Matricular </button></td>
               </tr>
             </tbody>
           </table>
