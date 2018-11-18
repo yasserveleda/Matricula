@@ -25,37 +25,41 @@ export class MatriculaComponent implements OnInit {
   }
 
   ngOnInit() {
+    //Carrega Todas disciplinas do Curso
     this.matriculaservice.getDisciplinas().subscribe( data => {
       this.disciplinas = data['records'];
       this.disciplinasOferecidas = this.disciplinas;
-      //console.log(this.disciplinas);
     });
   }
   
 
-  getAluno() {
+  //Faz a busca do Aluno atraves da matricula
+  getAlunoHistorico() {
     let matricula = this.matricula;
-    // this.matriculaservice.getAluno(matricula).subscribe( data => {
-    //   if(data[`records`].length > 0){
-    //     this.exibirErro = false;
-    //     this.aluno = data[`records`][0];
-    //     this.aluno = this.aluno.fields;
-    //     console.log(this.aluno);
-    //   } else {
-    //     this.exibirErro = true;
-    //   }
-    // });
-
     this.matriculaservice.getHistorico(matricula).subscribe( data => {
       if(data[`records`].length > 0){
         this.exibirErro = false;
         this.historicoAluno = data[`records`];
+        this.listarDisciplinasOferecidas(this.historicoAluno);
       } else {
         this.exibirErro = true;
         this.historicoAluno = [];
         this.disciplinasOferecidas = [];
       }
     });
+  }
+
+  //Lista as Disciplinas Oferecidas para o Aluno Buscado
+  listarDisciplinasOferecidas(disciplinasHistorico) {
+    let todasDisciplinas = this.disciplinas;
+    for(let j = 0; j < disciplinasHistorico.length; j++) {
+      for( var i = 0; i < todasDisciplinas.length; i++){ 
+        if ( todasDisciplinas[i]['fields'].CODCRED == disciplinasHistorico[j]['fields'].CODCRED) {
+          todasDisciplinas.splice(i, 1); 
+        }
+      }
+    }
+    this.disciplinasOferecidas = todasDisciplinas;
   }
 
 }

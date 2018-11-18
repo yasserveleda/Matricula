@@ -7,7 +7,7 @@
               <input (input)="matricula = $event.target.value" type="text" class="form-control" id="matricula-input" placeholder="000000">
             </div>
           
-            <button [disabled]="!matricula" (click)="getAluno();" class="btn btn-primary">Buscar</button>
+            <button [disabled]="!matricula" (click)="getAlunoHistorico();" class="btn btn-primary">Buscar</button>
           </div>
       </div>
       <div class="col-md-12" [hidden]="exibirErro">
@@ -16,11 +16,6 @@
       <div class="col-md-12 text-center" [hidden]="!exibirErro">
         <h5> Aluno não encontrado </h5>
       </div>
-      <!-- <ul>
-          <li *ngFor="let disciplina of disciplinas">
-            {{disciplina.fields.CODCRED}} | {{disciplina.fields.DISCIPLINA}} | {{disciplina.fields.SEMESTRE}}
-         </li>
-        </ul> -->
 
       <div class="row">
         <div class="col-md-6">
