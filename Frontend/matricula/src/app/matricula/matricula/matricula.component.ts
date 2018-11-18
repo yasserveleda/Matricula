@@ -28,7 +28,6 @@ export class MatriculaComponent implements OnInit {
     //Carrega Todas disciplinas do Curso
     this.matriculaservice.getDisciplinas().subscribe( data => {
       this.disciplinas = data['records'];
-      this.disciplinasOferecidas = this.disciplinas;
     });
   }
   
