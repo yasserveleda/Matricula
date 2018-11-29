@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
 interface myData {
+    status: string
     obj: Object
 }
 
@@ -46,4 +47,5 @@ export class MatriculaSerivce {
 
         return this.http.patch<myData>(url, alunoAux, this.httpOptions);
     }
+
 }

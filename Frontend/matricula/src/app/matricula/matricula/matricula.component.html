@@ -7,7 +7,7 @@
               <input (input)="matricula = $event.target.value" type="text" class="form-control" id="matricula-input" placeholder="000000">
             </div>
           
-            <button [disabled]="!matricula" (click)="getAlunoHistorico();" class="btn btn-primary">Buscar</button>
+            <button [disabled]="!matricula" (click)="getAluno();" class="btn btn-primary">Buscar</button>
           </div>
 
           <button (click)="matriculaAluno();" class="btn btn-primary"> Matricular Aluno </button>
@@ -43,22 +43,20 @@
         </div>
   
         <div class="col-md-6">
-          <h4> Disciplinas Cursadas </h4>
+          <h4> Disciplinas Matriculadas </h4>
           <table class="table" [hidden]="exibirErro">
             <thead>
               <tr>
                 <th scope="col">CODCRED</th>
+                <th scope="col">Semestre</th>
                 <th scope="col">Disciplina</th>
-                <th scope="col">Turma</th>
-                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let historico of historicoAluno">
-                <th scope="row">{{ historico.fields.CODCRED}}</th>
-                <td> {{ historico.fields.nome_disciplina }} </td>
-                <td>{{ historico.fields.TURMA}}</td>
-                <td>{{ historico.fields.STATUS}}</td>
+              <tr *ngFor="let matriculada of disciplinasMatriculadas">
+                <th scope="row">{{ matriculada.fields.CODCRED }}</th>
+                <td>{{ matriculada.fields.SEMESTRE}}</td>
+                <td> {{ matriculada.fields.DISCIPLINA }} </td>
               </tr>
             </tbody>
           </table>
