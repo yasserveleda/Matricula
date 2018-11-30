@@ -38,7 +38,12 @@ export class MatriculaComponent implements OnInit {
         if(data[`id`]) {
           this.aluno = data;
           this.disciplinasMatriculadasId = this.aluno.fields.DISCIPLINAS_MATRICULADO;
+          
+
+          this.disciplinasMatriculadasId = this.aluno.fields.DISCIPLINAS_MATRICULADO;
           this.listaDisciplinasMatriculadas();
+
+          this.getHistorico();
         }
 
       });
@@ -83,7 +88,7 @@ export class MatriculaComponent implements OnInit {
 
   //Lista as Disciplinas Oferecidas para o Aluno Buscado
   listarDisciplinasOferecidas(disciplinasHistorico) {
-    let todasDisciplinas = this.disciplinas;
+    let todasDisciplinas = [... this.disciplinas];
 
     for(let j = 0; j < disciplinasHistorico.length; j++) {
       for( var i = 0; i < todasDisciplinas.length; i++){ 
@@ -97,7 +102,7 @@ export class MatriculaComponent implements OnInit {
   }
 
   listaDisciplinasMatriculadas() {
-    let todasDisciplinas = this.disciplinas;
+    let todasDisciplinas = [... this.disciplinas];
     let listaGuardaMatriculadas = [];
 
     for(let j = 0; j < this.disciplinasMatriculadasId.length; j++) {
