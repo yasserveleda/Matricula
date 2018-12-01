@@ -21,8 +21,8 @@ export class MatriculaSerivce {
     }
 
     getDisciplinas() {
-        let urlAsc = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/DISCIPLINA2?sort%5B0%5D%5Bfield%5D=SEMESTRE&sort%5B0%5D%5Bdirection%5D=asc`;
-        //let url = "https://api.airtable.com/v0/appM4HMJqyZHY4gBR/DISCIPLINA2?sort=([{field: 'ID', direction: 'asc'}])";
+        let urlAsc = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/DISCIPLINA?sort%5B0%5D%5Bfield%5D=SEMESTRE&sort%5B0%5D%5Bdirection%5D=asc`;
+        //let url = "https://api.airtable.com/v0/appM4HMJqyZHY4gBR/DISCIPLINA?sort=([{field: 'ID', direction: 'asc'}])";
         return this.http.get<myData>(urlAsc, this.httpOptions);
     }
 
