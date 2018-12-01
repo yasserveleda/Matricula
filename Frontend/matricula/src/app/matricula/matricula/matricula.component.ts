@@ -31,21 +31,16 @@ export class MatriculaComponent implements OnInit {
     });
   }
   
-  matriculaAluno() {
+  //Atualiza o aluno 
+  atualizaAluno() {
     if(this.aluno.id) {
-      this.matriculaservice.matriculaAluno(this.aluno).subscribe( data => {
-        
+      this.matriculaservice.atualizaAluno(this.aluno).subscribe( data => {
         if(data[`id`]) {
           this.aluno = data;
           this.disciplinasMatriculadasId = this.aluno.fields.DISCIPLINAS_MATRICULADO;
-          
-
-          this.disciplinasMatriculadasId = this.aluno.fields.DISCIPLINAS_MATRICULADO;
           this.listaDisciplinasMatriculadas();
-
           this.getHistorico();
         }
-
       });
     }
   }
@@ -65,6 +60,7 @@ export class MatriculaComponent implements OnInit {
     });
   }
 
+  //Busca o historico do aluno
   getHistorico() {
     let matricula = this.matricula;
 
@@ -86,7 +82,7 @@ export class MatriculaComponent implements OnInit {
     });
   }
 
-  //Lista as Disciplinas Oferecidas para o Aluno Buscado
+  //Lista as Disciplinas Oferecidas para o aluno
   listarDisciplinasOferecidas(disciplinasHistorico) {
     let todasDisciplinas = [... this.disciplinas];
 
@@ -101,6 +97,7 @@ export class MatriculaComponent implements OnInit {
     this.disciplinasOferecidas = todasDisciplinas;
   }
 
+  //Lista as disciplinas que o aluno esta matriculado
   listaDisciplinasMatriculadas() {
     let todasDisciplinas = [... this.disciplinas];
     let listaGuardaMatriculadas = [];
@@ -112,19 +109,32 @@ export class MatriculaComponent implements OnInit {
         }
       }
     }
-
     this.disciplinasMatriculadas = listaGuardaMatriculadas;
   }
   
-  matriculaDisciplinaAluno(disciplina) {
+  //Matricula o aluno na disciplina
+  matriculaDisciplinaAluno(disciplinaId) {
     if(this.aluno.fields.DISCIPLINAS_MATRICULADO) {
-      this.aluno.fields.DISCIPLINAS_MATRICULADO.push(disciplina.id);
-      this.matriculaAluno();
+      this.aluno.fields.DISCIPLINAS_MATRICULADO.push(disciplinaId);
+      this.atualizaAluno();
     } else {
       this.aluno.fields.DISCIPLINAS_MATRICULADO = [];
-      this.aluno.fields.DISCIPLINAS_MATRICULADO.push(disciplina.id);
-      this.matriculaAluno();
+      this.aluno.fields.DISCIPLINAS_MATRICULADO.push(disciplinaId);
+      this.atualizaAluno();
     }
+  }
+
+  //Remove disciplina matriculada do aluno
+  desmatriculaDisciplinaAluno(idDisciplina) {
+    if(this.aluno.fields.DISCIPLINAS_MATRICULADO) { 
+      let index = this.aluno.fields.DISCIPLINAS_MATRICULADO.indexOf(idDisciplina);
+      if (index !== -1) {
+        this.aluno.fields.DISCIPLINAS_MATRICULADO.splice(index, 1);
+        //Atualiza
+        this.atualizaAluno();
+        this.getHistorico();
+      } 
+    }         
   }
 
 }

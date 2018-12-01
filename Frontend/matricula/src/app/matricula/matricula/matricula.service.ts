@@ -36,7 +36,7 @@ export class MatriculaSerivce {
         return this.http.get<myData>(url, this.httpOptions);
     }
 
-    matriculaAluno(aluno) {
+    atualizaAluno(aluno) {
         let url = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/ALUNO/${aluno.id}`;
         let disciplinas = aluno.fields.DISCIPLINAS_MATRICULADO;
         let alunoAux = {

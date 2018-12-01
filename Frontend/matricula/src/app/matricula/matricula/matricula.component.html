@@ -36,7 +36,7 @@
                 <th scope="row">{{ disciplina.fields.CODCRED }}</th>
                 <td>{{ disciplina.fields.SEMESTRE}}</td>
                 <td> {{ disciplina.fields.DISCIPLINA }} </td>
-                <td> <button (click)="matriculaDisciplinaAluno(disciplina)" class="btn btn-sm btn-primary"> Matricular </button></td>
+                <td> <button (click)="matriculaDisciplinaAluno(disciplina.id)" class="btn btn-sm btn-primary"> Matricular </button></td>
               </tr>
             </tbody>
           </table>
@@ -50,6 +50,7 @@
                 <th scope="col">CODCRED</th>
                 <th scope="col">Semestre</th>
                 <th scope="col">Disciplina</th>
+                <th scope="col">Remover</th>
               </tr>
             </thead>
             <tbody>
@@ -57,6 +58,7 @@
                 <th scope="row">{{ matriculada.fields.CODCRED }}</th>
                 <td>{{ matriculada.fields.SEMESTRE}}</td>
                 <td> {{ matriculada.fields.DISCIPLINA }} </td>
+                <td> <button (click)="desmatriculaDisciplinaAluno(matriculada.id)" class="btn btn-sm btn-danger"> Remover </button></td>
               </tr>
             </tbody>
           </table>
