@@ -37,7 +37,6 @@ export class HistoricoComponent implements OnInit {
       } else {
         return `Disciplina Não encontrada`;
       }
-      
     } else {
       return `Disciplina Não encontrada`;
     }

@@ -9,8 +9,6 @@
           
             <button [disabled]="!matricula" (click)="getAluno();" class="btn btn-primary">Buscar</button>
           </div>
-
-          <button (click)="matriculaAluno();" class="btn btn-primary"> Matricular Aluno </button>
       </div>
       <div class="col-md-12" [hidden]="exibirErro">
         <h5> Histórico da matrícula: {{ matricula }}</h5>
@@ -36,7 +34,7 @@
                 <th scope="row">{{ disciplina.fields.CODCRED }}</th>
                 <td>{{ disciplina.fields.SEMESTRE}}</td>
                 <td> {{ disciplina.fields.DISCIPLINA }} </td>
-                <td> <button (click)="matriculaDisciplinaAluno(disciplina.id)" class="btn btn-sm btn-primary"> Matricular </button></td>
+                <td> <button (click)="matriculaDisciplinaAluno(disciplina)" class="btn btn-sm btn-primary"> Matricular </button></td>
               </tr>
             </tbody>
           </table>

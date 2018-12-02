@@ -68,6 +68,7 @@ export class MatriculaComponent implements OnInit {
       if(data[`records`].length > 0){
         this.exibirErro = false;
         this.historicoAluno = data[`records`];
+
         //copia das disciplinas que o aluno está matriculado
         let auxDisciplinasMatriculadas = this.disciplinasMatriculadas;
         //disciplinas que serao removidas das oferecidas
@@ -101,11 +102,12 @@ export class MatriculaComponent implements OnInit {
   listaDisciplinasMatriculadas() {
     let todasDisciplinas = [... this.disciplinas];
     let listaGuardaMatriculadas = [];
-
-    for(let j = 0; j < this.disciplinasMatriculadasId.length; j++) {
-      for( var i = 0; i < todasDisciplinas.length; i++){ 
-        if ( todasDisciplinas[i]['id'] == this.disciplinasMatriculadasId[j]) {
-          listaGuardaMatriculadas.push(todasDisciplinas[i]);
+    if (this.disciplinasMatriculadasId) {
+      for(let j = 0; j < this.disciplinasMatriculadasId.length; j++) {
+        for( var i = 0; i < todasDisciplinas.length; i++){ 
+          if ( todasDisciplinas[i]['id'] == this.disciplinasMatriculadasId[j]) {
+            listaGuardaMatriculadas.push(todasDisciplinas[i]);
+          }
         }
       }
     }
@@ -113,13 +115,30 @@ export class MatriculaComponent implements OnInit {
   }
   
   //Matricula o aluno na disciplina
-  matriculaDisciplinaAluno(disciplinaId) {
+  matriculaDisciplinaAluno(disciplina) {
+    //Confere se a disciplina tem pre requisito
+    if(disciplina.fields.PRE_REQUISITOS) {
+      let idDisciplina = disciplina.fields.PRE_REQUISITOS[0];
+      //Pre requisito aceito
+      if(this.containsInArray(this.historicoAluno, idDisciplina)) {
+        console.log(`Pre requisito aceito`);
+        this.continuaMatricula(disciplina);
+      } else {
+        console.log(`Pre requisito nao aceito`);
+      }
+    } else {
+      this.continuaMatricula(disciplina);
+    }
+  }
+
+  //conclui a matricula
+  continuaMatricula(disciplina) {
     if(this.aluno.fields.DISCIPLINAS_MATRICULADO) {
-      this.aluno.fields.DISCIPLINAS_MATRICULADO.push(disciplinaId);
+      this.aluno.fields.DISCIPLINAS_MATRICULADO.push(disciplina.id);
       this.atualizaAluno();
     } else {
       this.aluno.fields.DISCIPLINAS_MATRICULADO = [];
-      this.aluno.fields.DISCIPLINAS_MATRICULADO.push(disciplinaId);
+      this.aluno.fields.DISCIPLINAS_MATRICULADO.push(disciplina.id);
       this.atualizaAluno();
     }
   }
@@ -135,6 +154,11 @@ export class MatriculaComponent implements OnInit {
         this.getHistorico();
       } 
     }         
+  }
+
+  containsInArray(lista, itemID) {
+    let disciplinaCodCred = this.disciplinas.find(x => x.id == itemID);
+    return lista.find(x => x.fields.CODCRED == disciplinaCodCred.fields.CODCRED);
   }
 
 }
