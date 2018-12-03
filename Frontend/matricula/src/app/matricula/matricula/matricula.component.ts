@@ -132,19 +132,25 @@ export class MatriculaComponent implements OnInit {
   }
   
   //Matricula o aluno na disciplina
-  matriculaDisciplinaAluno(disciplina) {
-    //Confere se a disciplina tem pre requisito
-    if(disciplina.fields.PRE_REQUISITOS) {
-      let idDisciplina = disciplina.fields.PRE_REQUISITOS[0];
-      //Pre requisito aceito
-      if(this.containsInArray(this.historicoAluno, idDisciplina)) {
-        this.continuaMatricula(disciplina);
+  matriculaDisciplinaAluno(dis) {
+    this.matriculaservice.getDisciplinas().subscribe( data => {
+      this.disciplinas = data['records'];
+      let disciplina = this.disciplinas.find(x => x.id == dis.id);
+      //Confere se a disciplina tem pre requisito
+      if(disciplina.fields.PRE_REQUISITOS) {
+        let idDisciplina = disciplina.fields.PRE_REQUISITOS[0];
+        //Pre requisito aceito
+        if(this.containsInArray(this.historicoAluno, idDisciplina)) {
+          this.continuaMatricula(disciplina);
+        } else {
+          alert(`Pre requisito nao aceito`);
+        }
       } else {
-        alert(`Pre requisito nao aceito`);
+        this.continuaMatricula(disciplina);
       }
-    } else {
-      this.continuaMatricula(disciplina);
-    }
+    });
+
+    
   }
 
   //Matricula o aluno na turma

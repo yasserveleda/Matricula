@@ -10,11 +10,11 @@ declare let $ :any;
 })
 export class HistoricoComponent implements OnInit {
 
-  private historicos: any[];
-  private disciplinas;
-  private aluno;
-  private matricula: string;
-  private exibirErro: boolean;
+  historicos: any[];
+  disciplinas;
+  aluno;
+  matricula: string;
+  exibirErro: boolean;
 
   constructor(private historicoservice: HistoricoService) { 
     this.disciplinas = [];
