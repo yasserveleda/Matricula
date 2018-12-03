@@ -22,7 +22,6 @@ export class MatriculaSerivce {
 
     getDisciplinas() {
         let urlAsc = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/DISCIPLINA?sort%5B0%5D%5Bfield%5D=SEMESTRE&sort%5B0%5D%5Bdirection%5D=asc`;
-        //let url = "https://api.airtable.com/v0/appM4HMJqyZHY4gBR/DISCIPLINA?sort=([{field: 'ID', direction: 'asc'}])";
         return this.http.get<myData>(urlAsc, this.httpOptions);
     }
 
@@ -46,8 +45,17 @@ export class MatriculaSerivce {
                 "TURMAS": turmas
             }
         };
-
         return this.http.patch<myData>(url, alunoAux, this.httpOptions);
+    }
+
+    atualizaDisciplina(disciplina) {
+        let url = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/DISCIPLINA/${disciplina.id}`;
+        let disciplinaAux = {
+            "fields": {
+                "NUMERO_VAGAS": disciplina.fields.NUMERO_VAGAS
+            }
+        };
+        return this.http.patch<myData>(url, disciplinaAux, this.httpOptions);
     }
 
     getTurmas() {

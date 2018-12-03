@@ -19,6 +19,7 @@ export class MatriculaComponent implements OnInit {
   aluno;
   matricula: string;
   turmas: any[];
+  numeroVagas: number;
 
   constructor(private matriculaservice: MatriculaSerivce) { 
     this.aluno = {};
@@ -34,7 +35,6 @@ export class MatriculaComponent implements OnInit {
   getDisciplinas() {
     this.matriculaservice.getDisciplinas().subscribe( data => {
       this.disciplinas = data['records'];
-      console.log(this.disciplinas);
     });
   }
 
@@ -96,7 +96,6 @@ export class MatriculaComponent implements OnInit {
     this.matriculaservice.getTurmas().subscribe( data => { 
       if(data[`records`].length > 0){ 
         this.turmas = data[`records`];
-        console.log(this.turmas);
       }
     });
   }
@@ -139,10 +138,9 @@ export class MatriculaComponent implements OnInit {
       let idDisciplina = disciplina.fields.PRE_REQUISITOS[0];
       //Pre requisito aceito
       if(this.containsInArray(this.historicoAluno, idDisciplina)) {
-        console.log(`Pre requisito aceito`);
         this.continuaMatricula(disciplina);
       } else {
-        console.log(`Pre requisito nao aceito`);
+        alert(`Pre requisito nao aceito`);
       }
     } else {
       this.continuaMatricula(disciplina);
@@ -151,7 +149,6 @@ export class MatriculaComponent implements OnInit {
 
   //Matricula o aluno na turma
   matriculaTurmaAluno(turma) {
-
     if(this.aluno.fields.TURMAS) {
       this.aluno.fields.TURMAS.push(turma.id);
       this.atualizaAluno();
@@ -160,28 +157,47 @@ export class MatriculaComponent implements OnInit {
       this.aluno.fields.TURMAS.push(turma.id);
       this.atualizaAluno();
     }
-
-    console.log(this.aluno);
   }
 
   //conclui a matricula
   continuaMatricula(disciplina) {
-    if(this.aluno.fields.DISCIPLINAS_MATRICULADO) {
-      this.aluno.fields.DISCIPLINAS_MATRICULADO.push(disciplina.id);
-      this.atualizaAluno();
+    this.numeroVagas = disciplina.fields.NUMERO_VAGAS;
+    if(this.numeroVagas > 0){
+      disciplina.fields.NUMERO_VAGAS = `${disciplina.fields.NUMERO_VAGAS - 1}`;
+      this.atualizaDisciplina(disciplina);
+      if(this.aluno.fields.DISCIPLINAS_MATRICULADO) {
+        this.aluno.fields.DISCIPLINAS_MATRICULADO.push(disciplina.id);
+        this.atualizaAluno();
+      } else {
+        this.aluno.fields.DISCIPLINAS_MATRICULADO = [];
+        this.aluno.fields.DISCIPLINAS_MATRICULADO.push(disciplina.id);
+        this.atualizaAluno();
+      }
     } else {
-      this.aluno.fields.DISCIPLINAS_MATRICULADO = [];
-      this.aluno.fields.DISCIPLINAS_MATRICULADO.push(disciplina.id);
-      this.atualizaAluno();
+      alert(`NAO TEM VAGA`);
+    }    
+  }
+
+  atualizaDisciplina(disciplina) {
+    if(disciplina.id) {
+      this.matriculaservice.atualizaDisciplina(disciplina).subscribe( data => {
+        if(data) {
+          //console.log(data);
+        }
+      });
     }
   }
 
   //Remove disciplina matriculada do aluno
-  desmatriculaDisciplinaAluno(idDisciplina) {
+  desmatriculaDisciplinaAluno(disciplina) {
     if(this.aluno.fields.DISCIPLINAS_MATRICULADO) { 
-      let index = this.aluno.fields.DISCIPLINAS_MATRICULADO.indexOf(idDisciplina);
+      let index = this.aluno.fields.DISCIPLINAS_MATRICULADO.indexOf(disciplina.id);
       if (index !== -1) {
         this.aluno.fields.DISCIPLINAS_MATRICULADO.splice(index, 1);
+        let numero = Number.parseInt(disciplina.fields.NUMERO_VAGAS);
+        disciplina.fields.NUMERO_VAGAS = `${(numero+1)}`
+        //Atualiza Numero Vagas
+        this.atualizaDisciplina(disciplina);
         //Atualiza
         this.atualizaAluno();
         this.getHistorico();
