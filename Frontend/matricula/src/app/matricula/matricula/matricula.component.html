@@ -11,7 +11,7 @@
           </div>
       </div>
       <div class="col-md-12" [hidden]="exibirErro">
-        <h5> Histórico da matrícula: {{ matricula }}</h5>
+        <h5> Aluno: {{ matricula }}</h5>
       </div>
       <div class="col-md-12 text-center" [hidden]="!exibirErro">
         <h5> Aluno não encontrado </h5>
@@ -61,6 +61,34 @@
             </tbody>
           </table>
         </div>
+      </div>
+
+      <div class="col-md-12">
+        <h4> Turmas Oferecidas </h4>
+        <table class="table" [hidden]="exibirErro">
+          <thead>
+            <tr>
+              <th scope="col">CODCRED</th>
+              <th scope="col">NOME</th>
+              <th scope="col">SEMESTRE</th>
+              <th scope="col"> Numero </th>
+              <th scope="col"> Vagas</th>
+              <th scope="col"> Horário </th>
+              <th scope="col">  </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let turma of turmas">
+              <th scope="row">{{ turma.fields.CODCRED }}</th>
+              <td>{{ turma.fields.NOME }}</td>
+              <td>{{ turma.fields.SEMESTRE }}</td>
+              <td> {{ turma.fields.NUMERO }} </td>
+              <td> {{ turma.fields.VAGAS }} </td>
+              <td> {{ turma.fields.HORARIO }} </td>
+              <th> <button (click)="matriculaTurmaAluno(turma)" class="btn btn-sm btn-primary"> Matricular </button> </th>
+            </tr>
+          </tbody>
+        </table>
       </div>
       
     </div>

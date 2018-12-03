@@ -39,13 +39,21 @@ export class MatriculaSerivce {
     atualizaAluno(aluno) {
         let url = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/ALUNO/${aluno.id}`;
         let disciplinas = aluno.fields.DISCIPLINAS_MATRICULADO;
+        let turmas = aluno.fields.TURMAS;
         let alunoAux = {
             "fields": {
-                "DISCIPLINAS_MATRICULADO": disciplinas
+                "DISCIPLINAS_MATRICULADO": disciplinas,
+                "TURMAS": turmas
             }
         };
 
         return this.http.patch<myData>(url, alunoAux, this.httpOptions);
+    }
+
+    getTurmas() {
+        let url = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/TURMA`;
+        let urlAsc  = `https://api.airtable.com/v0/appM4HMJqyZHY4gBR/TURMA?sort%5B0%5D%5Bfield%5D=SEMESTRE&sort%5B0%5D%5Bdirection%5D=asc`;
+        return this.http.get<myData>(urlAsc, this.httpOptions);
     }
 
 }

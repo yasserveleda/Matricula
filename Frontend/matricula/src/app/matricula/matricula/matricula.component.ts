@@ -18,6 +18,7 @@ export class MatriculaComponent implements OnInit {
   exibirErro: boolean;
   aluno;
   matricula: string;
+  turmas: any[];
 
   constructor(private matriculaservice: MatriculaSerivce) { 
     this.aluno = {};
@@ -25,11 +26,18 @@ export class MatriculaComponent implements OnInit {
   }
 
   ngOnInit() {
-    //Carrega Todas disciplinas do Curso
+    this.getTurmas();
+    this.getDisciplinas();
+  }
+
+  //Busca todas as disciplinas
+  getDisciplinas() {
     this.matriculaservice.getDisciplinas().subscribe( data => {
       this.disciplinas = data['records'];
+      console.log(this.disciplinas);
     });
   }
+
   
   //Atualiza o aluno 
   atualizaAluno() {
@@ -83,6 +91,16 @@ export class MatriculaComponent implements OnInit {
     });
   }
 
+  //Busca todas as turmas
+  getTurmas() {
+    this.matriculaservice.getTurmas().subscribe( data => { 
+      if(data[`records`].length > 0){ 
+        this.turmas = data[`records`];
+        console.log(this.turmas);
+      }
+    });
+  }
+
   //Lista as Disciplinas Oferecidas para o aluno
   listarDisciplinasOferecidas(disciplinasHistorico) {
     let todasDisciplinas = [... this.disciplinas];
@@ -129,6 +147,21 @@ export class MatriculaComponent implements OnInit {
     } else {
       this.continuaMatricula(disciplina);
     }
+  }
+
+  //Matricula o aluno na turma
+  matriculaTurmaAluno(turma) {
+
+    if(this.aluno.fields.TURMAS) {
+      this.aluno.fields.TURMAS.push(turma.id);
+      this.atualizaAluno();
+    } else {
+      this.aluno.fields.TURMAS = [];
+      this.aluno.fields.TURMAS.push(turma.id);
+      this.atualizaAluno();
+    }
+
+    console.log(this.aluno);
   }
 
   //conclui a matricula
